@@ -11,7 +11,7 @@ NUXT_DIR=./workspace/nuxt
 
 # Dev-режим: горячая перезагрузка Nuxt
 dev:
-	@echo "Очистка кэша перед запуском разработки..."
+	@echo "Очистка кэша"
 	$(MAKE) clean-nuxt
 	@echo "Запуск проекта в режиме разработки (hot reload)..."
 	$(COMPOSE) up --build
@@ -30,15 +30,12 @@ prod:
 
 # Остановка всех контейнеров
 stop:
-	@echo "Остановка всех контейнеров..."
 	$(COMPOSE) down
 
 # Очистка данных базы и контейнеров
 clean:
-	@echo "Полная очистка (контейнеры, тома, сеть)..."
 	$(COMPOSE) down -v --remove-orphans
 
 # Логи Nuxt в реальном времени
 logs:
-	@echo "Просмотр логов Nuxt..."
 	$(COMPOSE) logs -f nuxt

@@ -1,10 +1,9 @@
 // server/db/index.ts
 import { drizzle } from 'drizzle-orm/postgres-js'
 import postgres from 'postgres'
-import * as schema from './schema'
+import { genres, performances, sessions, users, guests, tickets } from './schema'
 
-// Подключаемся к базе
 const client = postgres(process.env.DATABASE_URL!)
-export const db = drizzle(client, { schema })
+export const db = drizzle(client, { schema: { genres, performances, sessions, users, guests, tickets } })
 
-export * from './schema'
+export { genres, performances, sessions, users, guests, tickets }

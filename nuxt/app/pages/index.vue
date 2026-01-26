@@ -11,7 +11,7 @@
       <section class="hero-brutal">
         <div class="hero-container">
           <div class="hero-content">
-            <div class="hero-tag">СЕЗОН 2024</div>
+            <div class="hero-tag">СЕЗОН 2026</div>
             <h1 class="hero-title">
               <span class="title-word">ТЕАТР</span>
               <span class="title-word accent">КАК</span>
@@ -361,11 +361,11 @@ const featuredShows = ref(performances.slice(0, 3))
   
   &.secondary {
     background: transparent;
-    color: #000;
-    border-color: #000;
+    color: #636363;
+    border-color: #636363;
     
     &:hover {
-      background: #000;
+      background: #636363;
       color: #fff;
     }
   }

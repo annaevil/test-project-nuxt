@@ -105,7 +105,7 @@
       <div class="footer-bottom">
         <div class="footer-bottom-content">
           <div class="copyright">
-            <p>© 2024 NOIRSCÈNE THEATRE. ВСЕ ПРАВА ЗАЩИЩЕНЫ</p>
+            <p>© 2026 NOIRSCÈNE THEATRE. ВСЕ ПРАВА ЗАЩИЩЕНЫ</p>
           </div>
           
           <div class="footer-legal">
@@ -216,6 +216,7 @@ const subscribe = () => {
 .footer-logo {
   font-size: 2rem;
   font-weight: 300;
+  color: #fff;
   letter-spacing: 2px;
   margin-bottom: 1rem;
   

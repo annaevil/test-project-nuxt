@@ -30,7 +30,7 @@
       </button>
 
       <div class="nav-actions">
-        <button class="btn-account">
+        <button class="btn-account" @click.prevent="navigateTo('/login')">
           <div class="btn-sparkle"></div>
           КАБИНЕТ
         </button>
