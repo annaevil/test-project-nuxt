@@ -1,7 +1,7 @@
 <template>
   <div v-if="user" class="admin-panel">
     <h1>Админ-панель</h1>
-    <p>Добро пожаловать, {{ user.name }}</p>
+    <p>Добро пожаловать!</p>
 
     <section class="admin-actions">
       <h2>Продажи билетов</h2>
@@ -9,6 +9,7 @@
       <button @click="showUpdatePrice = true">Изменить цену билета</button>
 
       <h2>Спектакли</h2>
+      <button @click="showAddPerformance = true">Добавить спектакль</button>
       <button @click="showEditPerformance = true">Изменить тип спектакля</button>
 
       <h2>Отчеты</h2>
@@ -16,10 +17,45 @@
       <button @click="generateByViewer">По зрителю</button>
       <button @click="generateByPerformance">По спектаклю</button>
       <button @click="generateByCashier">По кассиру</button>
+      <section v-if="report.length" class="report-section">
+        <h2>{{ reportTitle }}</h2>
 
-      <h2>Спектакли</h2>
-      <button @click="showAddPerformance = true">Добавить спектакль</button>
-      <button @click="showEditPerformance = true">Изменить тип спектакля</button>
+        <table border="1" cellpadding="5">
+          <thead>
+            <tr>
+              <th>Спектакль</th>
+              <th>Дата и время</th>
+              <th>Тип</th>
+              <th>Зал</th>
+              <th>Место</th>
+              <th>Зритель</th>
+              <th>Кассир</th>
+              <th>Цена</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr v-for="item in report" :key="item.id">
+              <td>{{ item.performance }}</td>
+              <td>{{ item.datetime }}</td>
+              <td>{{ item.performanceType }}</td>
+              <td>{{ item.hall }}</td>
+              <td>{{ item.row }} / {{ item.seat }}</td>
+              <td>
+                {{ item.viewer.lastName }}
+                {{ item.viewer.firstName }}
+                {{ item.viewer.middleName }}
+              </td>
+              <td>
+                {{ item.cashier.lastName }}
+                {{ item.cashier.firstName }}
+              </td>
+              <td>{{ item.price }} ₽</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
     </section>
 
     <!-- Модальные окна / компоненты для действий -->
@@ -30,17 +66,44 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue"
+import { ticketSales } from "@/mocks/ticketSales"
 import { useRouter } from "vue-router"
 import AddSaleModal from "../components/AddSaleModal.vue"
 import AddPerformanceModal from "../components/AddPerformanceModal.vue"
 
 const router = useRouter()
+const reportTitle = ref("")
 const user = ref<{ name: string; role: string } | null>(null)
 
 const showAddSale = ref(false)
 const showUpdatePrice = ref(false)
 const showEditPerformance = ref(false)
 const showAddPerformance = ref(false)
+
+type TicketReport = {
+  id: number
+  performance: string
+  performanceType: string
+  duration: number
+  theater: string
+  hall: string
+  row: number
+  seat: number
+  viewer: {
+    lastName: string
+    firstName: string
+    middleName: string
+  }
+  cashier: {
+    lastName: string
+    firstName: string
+  }
+  price: number
+  datetime: string
+  soldAt: string
+}
+
+const report = ref<TicketReport[]>([])
 
 onMounted(() => {
   const stored = localStorage.getItem("user")
@@ -54,17 +117,24 @@ onMounted(() => {
   }
 })
 
-function generateAllSales() {
-  alert("Сгенерирован отчет обо всех продажах")
+const generateAllSales = () => {
+  reportTitle.value = "Отчет обо всех продажах билетов"
+  report.value = ticketSales
 }
-function generateByViewer() {
-  alert("Сгенерирован отчет по зрителю")
+
+const generateByViewer = () => {
+  reportTitle.value = "Отчет о продажах определенного зрителя"
+  report.value = ticketSales.filter((t) => t.viewer.lastName === "Иванов")
 }
-function generateByPerformance() {
-  alert("Сгенерирован отчет по спектаклю")
+
+const generateByPerformance = () => {
+  reportTitle.value = "Отчет о продажах по спектаклю"
+  report.value = ticketSales.filter((t) => t.performance === "Ревизор")
 }
-function generateByCashier() {
-  alert("Сгенерирован отчет по кассиру")
+
+const generateByCashier = () => {
+  reportTitle.value = "Отчет о продажах определенного кассира"
+  report.value = ticketSales.filter((t) => t.cashier.lastName === "Петрова")
 }
 </script>
 
@@ -82,7 +152,6 @@ function generateByCashier() {
   position: relative;
   overflow-x: hidden;
 
-  // Фоновые элементы
   &::before {
     content: "";
     position: fixed;
@@ -106,6 +175,12 @@ function generateByCashier() {
     clip-path: polygon(0 100%, 100% 100%, 0 0);
     z-index: 0;
   }
+
+  button {
+    padding: 10px 15px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
 }
 
 .panel-content {
@@ -115,7 +190,6 @@ function generateByCashier() {
   margin: 0 auto;
 }
 
-// Заголовок
 h1 {
   font-size: 3.5rem;
   font-weight: 800;

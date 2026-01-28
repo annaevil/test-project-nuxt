@@ -1,0 +1,48 @@
+export const ticketSales = [
+  {
+    id: 1,
+    performance: 'Ревизор',
+    performanceType: 'Комедия',
+    duration: 120,
+    theater: 'Большой театр',
+    hall: 'Большой зал',
+    row: 5,
+    seat: 12,
+    viewer: {
+      lastName: 'Иванов',
+      firstName: 'Иван',
+      middleName: 'Иванович',
+    },
+    cashier: {
+      lastName: 'Петрова',
+      firstName: 'Анна',
+      middleName: 'Сергеевна',
+    },
+    price: 1500,
+    datetime: '2025-01-20 19:00',
+    soldAt: '2025-01-10',
+  },
+  {
+    id: 2,
+    performance: 'Гамлет',
+    performanceType: 'Трагедия',
+    duration: 150,
+    theater: 'Большой театр',
+    hall: 'Малый зал',
+    row: 3,
+    seat: 7,
+    viewer: {
+      lastName: 'Сидоров',
+      firstName: 'Павел',
+      middleName: 'Игоревич',
+    },
+    cashier: {
+      lastName: 'Петрова',
+      firstName: 'Анна',
+      middleName: 'Сергеевна',
+    },
+    price: 2000,
+    datetime: '2025-02-05 18:30',
+    soldAt: '2025-01-25',
+  },
+]
